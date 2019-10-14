@@ -1,0 +1,104 @@
+version: 2.1
+
+orbs:
+  orb-tools: circleci/orb-tools@8.5.0
+  netsparker: netsparker/scan@dev:alpha
+
+executors:
+  ci-base:
+    resource_class: small
+    docker:
+    - image: cibuilds/base
+
+jobs:
+  scantest:
+    executor: ci-base
+    steps:
+    - run: exit 0 # toggle this to force success or status for testing
+    - netsparker/scan:
+        website_id: 08eb847c-954e-4027-0372-aa71029c1ee6
+        api_url: https://32ae3f77.ngrok.io
+        # If scan_type is "FullWithPrimaryProfile", you do not need to fill in scanProfile_id.
+        scanProfile_id: c6558edc-e37c-4304-1588-aacd02cfea77
+        scan_type: FullWithPrimaryProfile
+
+integration-dev_filters: &integration-dev_filters
+  branches:
+    ignore: /.*/
+  tags:
+    only: /integration-.*/
+
+integration-master_filters: &integration-master_filters
+  branches:
+    only: master
+
+prod-deploy_requires: &prod-deploy_requires
+- scantest-master
+
+workflows:
+  lint_pack-validate_publish-dev:
+    jobs:
+    - orb-tools/lint
+
+    - orb-tools/pack:
+        requires:
+        - orb-tools/lint
+
+    - orb-tools/publish-dev:
+        orb-name: netsparker/scan
+        requires:
+        - orb-tools/pack
+
+    - orb-tools/trigger-integration-workflow:
+        name: trigger-integration-master
+        ssh-fingerprints: 2c:29:a7:cd:e8:51:4c:96:af:59:d5:19:06:8d:32:de
+        cleanup-tags: true
+        tag: master
+        requires:
+        - orb-tools/publish-dev
+        filters:
+          branches:
+            only: master
+  integration-tests_prod-release:
+    jobs:
+    # triggered by non-master branch commits
+    - scantest:
+        name: scantest-dev
+        filters: *integration-dev_filters
+    # triggered by master branch commits
+    - scantest:
+        name: scantest-master
+        filters: *integration-master_filters
+
+    # patch, minor, or major publishing
+    - orb-tools/dev-promote-prod:
+        name: dev-promote-patch
+        orb-name: netsparker/scan
+        requires: *prod-deploy_requires
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /master-patch.*/
+
+    - orb-tools/dev-promote-prod:
+        name: dev-promote-minor
+        release: minor
+        orb-name: netsparker/scan
+        requires: *prod-deploy_requires
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /master-minor.*/
+
+    - orb-tools/dev-promote-prod:
+        name: dev-promote-major
+        release: major
+        requires: *prod-deploy_requires
+        orb-name: netsparker/scan
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /master-major.*/

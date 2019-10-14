@@ -1,0 +1,37 @@
+    description: Start a scan on a website (target) using Netsparker Enterprise
+    executor: alpine
+    parameters:
+      api_url:
+        default: https://www.netsparkercloud.com/
+        description: |
+          Netsparker Enterprise Server URL like, https://www.netsparkercloud.com.
+        type: string
+      api_token:
+        default: NETSPARKER_ENTERPRISE_API_TOKEN
+        description: |
+           Netsparker Enterprise API token which you can find in your Netsparker Enterprise API settings page. This will be used for the API authentication.NETSPARKER_ENTERPRISE_API_TOKEN environment variable.
+        type: env_var_name
+      user_id:
+        default: NETSPARKER_ENTERPRISE_USER_ID
+        description: |
+           Netsparker Enterprise user id which you can find in your Netsparker Enterprise API settings page. This will be used for the API authentication.NETSPARKER_ENTERPRISE_USER_ID environment variable.
+        type: env_var_name
+      website_id:
+        default: NETSPARKER_ENTERPRISE_WEBSITE_ID
+        description: The id of the website (target) to scan.
+        type: string
+      scanProfile_id:
+        description: |
+            This profile will be used in the scan.If scan_type is FullWithPrimaryProfile, you do not need to fill in scanProfile_id.
+        type: string
+      scan_type:
+        default: FullWithPrimaryProfile
+        description: |
+           The requested scan type. (Incremental,FullWithPrimaryProfile or FullWithSelectedProfile)
+        type: string
+    steps:
+    - scan:
+        website_id: << parameters.website_id >>
+        api_url: << parameters.api_url >>
+        scan_type: << parameters.scan_type >>
+        scanProfile_id: << parameters.scanProfile_id >>

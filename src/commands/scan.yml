@@ -1,0 +1,63 @@
+description: "Start the scan on a target (website) using Netsparker Enterprise.\n"
+parameters:
+  api_token:
+    default: NETSPARKER_ENTERPRISE_API_TOKEN
+    description: |
+        "Netsparker Enterprise API token which you can find in your Netsparker Enterprise API settings page.
+        This will be used for the API authentication.NETSPARKER_ENTERPRISE_API_TOKEN environment variable.\n"
+    type: env_var_name
+  api_url:
+    default: "https://www.netsparkercloud.com/"
+    description: "Netsparker Enterprise Server URL like, https://www.netsparkercloud.com.\n"
+    type: string
+  scanProfile_id:
+    description: |
+        "This profile will be used in the scan.
+        If scan_type is 'FullWithPrimaryProfile', you do not need to fill in scanProfile_id.\n"
+    type: string
+  scan_type:
+    default: FullWithPrimaryProfile
+    description: "The requested scan type. (Incremental,FullWithPrimaryProfile or FullWithSelectedProfile)\n"
+    type: string
+  user_id:
+    default: NETSPARKER_ENTERPRISE_USER_ID
+    description: |
+        "Netsparker Enterprise user id which you can find in your Netsparker Enterprise API settings page.
+        This will be used for the API authentication.NETSPARKER_ENTERPRISE_USER_ID environment variable.\n"
+    type: env_var_name
+  website_id:
+    default: NETSPARKER_ENTERPRISE_WEBSITE_ID
+    description: "The id of the website (target) to scan."
+    type: string
+steps:
+  -
+    run:
+      command: |
+          # Check if API Token is set
+          if [ -z "$<< parameters.api_token >>" ]; then
+            echo "NO NETSPARKER ENTERPRISE API TOKEN SET"
+            echo "Please set your API TOKEN in the << parameters.api_token >> environment "
+                 "variable."
+            exit 1
+          fi
+          # Check if user_id id is set
+          if [ -z "$<< parameters.user_id >>" ]; then
+            echo "NO NETSPARKER ENTERPRISE USER ID SET"
+            echo "Please set your user id in the << parameters.user_id >> environment "
+                 "variable."
+            exit 1
+          fi
+          # Check if website id is set
+          if [ -z "<< parameters.website_id >>" ]; then
+            echo "NO NETSPARKER ENTERPRISE WEBSITE ID SET"
+            echo "Please set the website id as a parameter for this orb."
+            exit 1
+          fi
+          # Check if website id is set
+          if [ -z "<< parameters.scan_type >>" ]; then
+            echo "NO NETSPARKER ENTERPRISE SCAN TYPE SET"
+            echo "Please set the scan type as a parameter for this orb."
+            exit 1
+          fi
+          curl -u "$<< parameters.user_id >>:$<< parameters.api_token >>" -X POST << parameters.api_url >>/api/1.0/scans/CreateFromPluginScanRequest -H "Content-Type: application/json" -d "{'WebsiteId': '<< parameters.website_id >>','ProfileId': '<< parameters.scanProfile_id >>','ScanType': '<< parameters.scan_type >>', 'VcsCommitInfoModel': {'CiBuildConfigurationName' : '$CIRCLE_PROJECT_REPONAME', 'CiBuildHasChange': '$CIRCLE_SHA1', 'CiBuildId': '$CIRCLE_BUILD_NUM', 'CiBuildServerVersion': '$CI_SERVER_VERSION', 'CiBuildUrl': '$CIRCLE_BUILD_URL', 'Committer': '$CIRCLE_USERNAME', 'IntegrationSystem': 'AzureDevOps', 'VcsName': '$CIRCLE_REPOSITORY_URL', 'VcsVersion': '$CIRCLE_SHA1'}}"
+      name: "Netsparker Enterprise - Starting Security Scan"
