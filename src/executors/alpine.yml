@@ -2,5 +2,12 @@ docker:
   -
     environment:
       TERM: dumb
-    image: "cibuilds/base:latest"
+    image: "cibuilds/node:<<parameters.tag>>"
 resource_class: small
+parameters:
+  tag:
+    default: latest
+    description: >
+      Pick a specific circleci/node image variant:
+      https://hub.docker.com/r/circleci/node/tags
+    type: string
