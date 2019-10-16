@@ -8,7 +8,14 @@ executors:
   ci-base:
     resource_class: small
     docker:
-    - image: cibuilds/base
+    - image: cimg/base:2019.10
+    parameters:
+      tag:
+        default: latest
+        description: >
+         Pick a specific cimg/base image variant:
+         https://hub.docker.com/r/cimg/base/tags
+        type: string
 
 jobs:
   scantest:
