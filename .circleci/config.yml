@@ -2,21 +2,13 @@ version: 2.1
 
 orbs:
   orb-tools: circleci/orb-tools@8.5.0
-  netsparker: netsparker/scan@1.0.0
+  netsparker: netsparker/scan@dev:alpha
 
 executors:
-  ci-base:
+   ci-base:
     resource_class: small
     docker:
-    - image: cimg/base:<<parameters.tag>>
-    parameters:
-      tag:
-        default: 2019.10
-        description: >
-         Pick a specific cimg/base image variant:
-         https://hub.docker.com/r/cimg/base/tags
-        type: string
-
+    - image: cimg/base:2019.10
 jobs:
   scantest:
     executor: ci-base
