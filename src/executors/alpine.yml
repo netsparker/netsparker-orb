@@ -2,12 +2,5 @@ docker:
   -
     environment:
       TERM: dumb
-    image: "cimg/base:<<parameters.tag>>"
+    image: cimg/base:2019.10
 resource_class: small
-parameters:
-  tag:
-    default: latest
-    description: >
-      Pick a specific cimg/base image variant:
-      https://hub.docker.com/r/cimg/base/tags
-    type: string
