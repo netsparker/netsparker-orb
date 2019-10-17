@@ -1,15 +1,15 @@
 description: "Start the scan on a website (target) using Netsparker Enterprise."
 usage:
   orbs:
-    netsparker: "netsparker/scan@1.0.0"
+    netsparker: "netsparker/scan@1.0.4"
   version: 2.1
   workflows:
     example-workflow:
       jobs:
         -
           netsparker/scan:
-            api_url: netsparker_api_url
+            api_url: api_url
             # If scan_type is "FullWithPrimaryProfile", you do not need to fill in scanProfile_id
-            scanProfile_id: netsparker_scanprofile_id
-            website_id: netsparker_website_id
+            scanProfile_id: scanprofile_id
+            website_id: website_id
             scan_type : scan_type
