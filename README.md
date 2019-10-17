@@ -34,7 +34,7 @@ Example `config.yml`:
 version: 2.1
 
 orbs:
-  netsparker: netsparker/scan@1.0.0
+  netsparker: netsparker/scan@1.0.4
 
 workflows:
   scan-workflow:
