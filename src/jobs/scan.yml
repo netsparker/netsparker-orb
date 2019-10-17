@@ -17,15 +17,14 @@
            Netsparker Enterprise user id which you can find in your Netsparker Enterprise API settings page. This will be used for the API authentication.NETSPARKER_ENTERPRISE_USER_ID environment variable.
         type: env_var_name
       website_id:
-        default: NETSPARKER_ENTERPRISE_WEBSITE_ID
         description: The id of the website (target) to scan.
         type: string
       scanProfile_id:
+        default: 00000000-0000-0000-0000-000000000000
         description: |
             This profile will be used in the scan.If scan_type is FullWithPrimaryProfile, you do not need to fill in scanProfile_id.
         type: string
       scan_type:
-        default: FullWithPrimaryProfile
         description: |
            The requested scan type. (Incremental,FullWithPrimaryProfile or FullWithSelectedProfile)
         type: string
