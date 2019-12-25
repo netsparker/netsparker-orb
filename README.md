@@ -79,4 +79,4 @@ In order to access other information (eg website_id, scan_type) required in ".ya
 1. Click "Integrations> New Integration" from the menu on the left. From the page that opens, click CircleCI under the "Continuous Integration Systems" tab.
 1. Please select the type you want to scan. (Incremental, Full With primary profile, Full With selected profile). ApiUrl, WebsiteId, ScanType and ProfileId will be provided to you according to your choice. You can add values without quotation marks, as shown in the usage area.
 
-![Capture](https://user-images.githubusercontent.com/20044226/66570856-16f06680-eb77-11e9-9f79-0655db6a13a0.PNG)
+![Capture](https://user-images.githubusercontent.com/20044226/71442494-367b4200-2717-11ea-936d-e60fdbeecfd7.PNG)
