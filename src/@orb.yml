@@ -1,4 +1,6 @@
-description: |-
-    Use Netsparker Enterprise to scan your web application for security vulnerabilities.
-    Full orb source code: https://github.com/netsparker/netsparker-orb
 version: 2.1
+description: |
+    Use Netsparker Enterprise to scan your web application for security vulnerabilities.
+display:
+    home_url: https://www.netsparker.com/
+    source_url: https://github.com/netsparker/netsparker-orb
