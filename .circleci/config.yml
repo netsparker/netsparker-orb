@@ -41,7 +41,7 @@ workflows:
 
     - orb-tools/pack:
         requires:
-        - orb-tools/lint
+          - orb-tools/lint
 
     - orb-tools/publish-dev:
         orb-name: netsparker/scan
