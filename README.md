@@ -1,5 +1,4 @@
-# Netsparker Enterprise Security Scan [![CircleCI](https://circleci.com/gh/ahmetsonmez/netsparker-orb/tree/Alpha.svg?style=svg)](https://circleci.com/gh/ahmetsonmez/netsparker-orb/tree/Alpha) [![CircleCI Community](https://img.shields.io/badge/community-CircleCI%20Discuss-343434.svg)](https://discuss.circleci.com/c/ecosystem/orbs)
-
+# Netsparker Enterprise Security Scan [![CircleCI](https://circleci.com/gh/netsparker/netsparker-orb/tree/master.svg?style=svg)](https://circleci.com/gh/netsparker/netsparker-orb/tree/master) [![CircleCI Community](https://img.shields.io/badge/community-CircleCI%20Discuss-343434.svg)](https://discuss.circleci.com/c/ecosystem/orbs)
 
 This orb uses Netsparker Enterprise to scan your web application for security vulnerabilities. It enables security testing in your CircleCI pipeline.
 
