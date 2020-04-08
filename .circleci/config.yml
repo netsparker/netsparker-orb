@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   orb-tools: circleci/orb-tools@8.5.0
-  netsparker: netsparker/scan@dev:alpha --token $CIRCLE_TOKEN 
+  netsparker: netsparker/scan@dev:alpha $CIRCLE_TOKEN 
 
 executors:
    ci-base:
