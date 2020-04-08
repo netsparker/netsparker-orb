@@ -47,7 +47,7 @@ workflows:
         orb-name: netsparker/scan
         requires:
         - orb-tools/pack
-        
+
     - orb-tools/trigger-integration-workflow:
         name: trigger-integration-dev
         ssh-fingerprints: c5:2c:43:49:62:79:81:58:28:43:73:e2:93:ef:0e:09
